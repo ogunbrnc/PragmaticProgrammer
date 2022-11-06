@@ -53,7 +53,7 @@ Our current knowledge is temporary, as new techniques and new languages develop,
 * Buy low, sell high: It is difficult to learn an emerging technology without becoming popular, but the payoff can be very high.
 * Review and rebalance: We are in a rapidly changing industry, sometimes we need to sit down and review the technologies we use.
 
-**Tip 9: Invest Regularly in Your Knowledge Portfolio **
+**Tip 9: Invest Regularly in Your Knowledge Portfolio**
 
 **Tip 10: Critically Analyze What You Read and Hear**
 
@@ -62,7 +62,7 @@ We must make sure that the information in our portfolio is correct, that we are 
 ## Topic 7: Communicate! 
 As long as we can communicate well with other people, our ideas, the code we write, or having pragmatic thinking matters.
 
-**Tip 11: English is Just Another Programming Language **
+**Tip 11: English is Just Another Programming Language**
 
 Our communication with people depends on the audience. That's why it's very important that we know the audience's requirements because it affects the way we present, our ideas may be good but the way we present is also important.
 
@@ -97,7 +97,7 @@ When creating document, we should not explain how the code works in the comments
 
 When creating data that represent information, there is no need for a second data expressing the same data.
 
-**Tip 16: Make It Easy to Reuse **
+**Tip 16: Make It Easy to Reuse**
 ## Topic 10: Orthogonality
 If a change in one does not affect the other, these two things are orthogonal. In a well-designed system, Database codes and interface codes will be orthogonal, that is, they will not affect each other. nonorthogonal systems are more complex, more difficult to control and change.
 
@@ -114,9 +114,9 @@ The layered approach is a powerful way to design an orthogonal system. Thanks to
 
 We must be careful when using third-party tools, maintain the orthogonal nature of the system, and choose wisely.
 
-*Keep your code decoupled : We should write code that does not depend on other models and does not introduce unnecessary things to other modules.
-*Avoid global data: As soon as we use a global data, we become dependent on other modules that use this data. We should avoid it.
-*Avoid Similar functions: If the codes are repetitive, there is a structural problem.
+* Keep your code decoupled : We should write code that does not depend on other models and does not introduce unnecessary things to other modules.
+* Avoid global data: As soon as we use a global data, we become dependent on other modules that use this data. We should avoid it.
+* Avoid Similar functions: If the codes are repetitive, there is a structural problem.
 
 It is easier to test an orthogonal system because individual (unit test) tests are done because the components have limited access to each other.
 
@@ -139,11 +139,11 @@ If you are working on a project that has not been built before, that is, you are
 
 In Tracer development, there will always be changes and new functionality to be added. It is an incremental approach.
 
-*Users get to see something working early : They will be able to contribute during the development phase of the project.
-*Developers build a structure to work in : After solving the entire structure of the application from end to end, coding will not be that difficult.
-*You have an integration platform : The effect of each new change is more pronounced and interactions are more limited, so debugging and testing is faster and more accurate.
-*You have something to demonstrate : Project sponsors will want to see demos, so we can always show something.
-*You have a better feel for progress : It will be better to measure performance when one task is finished and another is started.
+* Users get to see something working early : They will be able to contribute during the development phase of the project.
+* Developers build a structure to work in : After solving the entire structure of the application from end to end, coding will not be that difficult.
+* You have an integration platform : The effect of each new change is more pronounced and interactions are more limited, so debugging and testing is faster and more accurate.
+* You have something to demonstrate : Project sponsors will want to see demos, so we can always show something.
+* You have a better feel for progress : It will be better to measure performance when one task is finished and another is started.
 
 We should not be surprised when we fail the first time, we should make changes and get closer to the goal.
 
@@ -194,7 +194,7 @@ The following should be applied incrementally.
 * Design, implement, integrate
 * Validate with the users 
 
-**Tip 24: Iterate the Schedule with the Code **
+**Tip 24: Iterate the Schedule with the Code**
 
 # Chapter 3: The Basic Tools 
 ## Topic 16: The Power of Plain Text 
@@ -222,7 +222,7 @@ Also, we can customize our workbench.
 * We can use the command completion feature.
 
 ## Topic 18: Power Editing
-** Tip 27: Achieve Editor Fluency**
+**Tip 27: Achieve Editor Fluency**
 
 The things we do while using the editor must have become habits, that is, we do things without thinking and this gives us a serious speed. As Pragmatic Programmers, we need to know the commands that make our life easier by heart. For this, we should look for a shorter way of what we do constantly while using the editor, and when we learn that new feature, we should make it a habit by repeating it constantly.
 
@@ -294,7 +294,7 @@ A simple but effective technique that attempts to identify the rights and respon
 * Postconditions: What the routine guarantees to do when called.
 * Class Invariants: A class ensures that this condition is always true for the caller.
 
-In summary, the routine ensures that postconditions and invariants will be completed when preconditions are provided by the caller. If not provided, an error may be thrown or the program may terminate. So have a clear idea of ​​what to accept and what to give in return at first.
+In summary, the routine ensures that postconditions and invariants will be completed when preconditions are provided by the caller. If not provided, an error may be thrown or the program may terminate. So have a clear idea of what to accept and what to give in return at first.
 
 **Tip 37: Design with Contracts**
 
