@@ -396,6 +396,7 @@ It's obvious that events can also be used to trigger reactions in code, but it's
 The easiest way to start the transformation is to identify the requirements, to lay out what the inputs and outputs will be. The next thing we need to do is to reveal how we can access the output from the input.
 
 **Tip 50: Don’t Hoard State; Pass It Around**
+
 ##Topic 31: Inheritance Tax
 There are two reasons to use inheritance. The first is to transfer the common features of the base class to child classes that will inherit, and the second is to establish a relationship between the base and the child class. However, both come with problems. Because inheritance is coupling.
 
@@ -480,14 +481,13 @@ A Blackboards with a rule engine covering legal requirements is an elegant solut
 **Tip 60: Use Blackboards to Coordinate Workflow**
 
 # Chapter 7: While You Are Coding
-## Topic 37: Listen to Your Lizard Brain
-
+## Topic 37: Listen to Your Lizard Brain
 Starting a new project can be a frustrating and frightening experience, there are 2 underlying problems and both have the same solution.
 
 * Our lizard brain may be trying to tell us something based on our previous experiences, which can make us feel reluctant or suspicious.
 * The other problem may be just afraid of making mistakes.
 
-** Tip 61: Listen to Your Inner Lizard **
+**Tip 61: Listen to Your Inner Lizard **
 
 First of all, we should let go of what we were doing at that moment and move away from the keyboard to not think about the code, we should give our brain some time to organize itself.
 
@@ -624,7 +624,7 @@ Give test code the same care as any development. Keep it decoupled, clean, and r
 ## Topic 42: Property-Based Testing
 We write code based on an assumption and we write tests based on that assumption. Just because the test we wrote passes does not mean that our assumption is correct. Because the test only does what it's supposed to do according to our assumption.
 
-** Tip 71: Use Property-Based Tests to Validate Your Assumptions**
+**Tip 71: Use Property-Based Tests to Validate Your Assumptions**
 
 In property-based testing, we set some rules to generate input and create some claims to validate the output. We don't know what will happen next.
 
