@@ -344,67 +344,67 @@ Pragmatic Programmers make their code changeable instead of predicting for an un
 
 # Chapter 5: Bend, or Break
 ## Topic 28: Decoupling
-We write code to be easily changeable. Coupling is the enemy of change because it connects things that need to change in parallel.
+Kod yazarken, yazdığımız kodların kolayca değiştirilebilir olmasını isteriz. Coupling ise değişimin düşmanıdır çünkü paralal olarak değişmesi gereken şeyleri birbirine bağlar.
 
 **Tip 44: Decoupled Code Is Easier to Change**
 
-Coupling can always occur when two different pieces of code share the same thing.
+İki farklı kod parçası aynı şeyi paylaştığı durumda her zaman coupling gerçekleşebilir.
 
-If you see strange dependencies between unrelated modules, or if a slight change in one place affects another, you definitely have coupling here. This can cause the programmer to be afraid to change the code.
+Eğer ki ilişkisiz modüller arasında tuhaf bağımlılıklar görüyorsanız veya bir yerde yapılan çok ufak bir değişiklik başka bir yeri de etkiliyorsa burada kesinlikle coupling vardır. Bu da yazılımcının kodu değiştirmeye korkmasına sebep olabilir.
 
 **Tip 45: Tell, Don’t Ask**
 
-We should not decide based on the internal state of an object and update that object. Doing so destroys the encapsulation principle.
+Bir nesnenin iç durumuna göre karar verip o nesneyi güncellememeliyiz. Bunu yapmak kapsülleme prensibini yok eder.
 
 **Tip 46: Don’t Chain Method Calls**
 
-When accessing information, more than one "." try not to use it.
+Bir bilgiye erişirken, birden fazla "." kullanmamaya çalışın.
 
-There is one big exception to the one-point rule: If the things you chain are unlikely to change, the rule doesn't apply.
+Tek nokta kuralının büyük bir istisnası var: Zincirlediğiniz şeylerin değişmesi pek olası değilse, kural geçerli değildir.
 
-Global data causes each method to gain an extra parameter because each method can access this global data. This causes a hidden connection between the methods. The most obvious of the problems this can bring is that a change to the global data can affect the entire code.
+Global veriler, her metodun ekstra bir parametre kazanmasına sebep olur çünkü her metod bu global veriye erişebilir. Bu da metodlar arasında gizli bir bağlantı kurulmasına sebep olur. Bunun getirebileceği sorunlardan en bariz olanı, global veride yapılan değişiklik tüm kodu etkileyebilir. 
 
 **Tip 47: Avoid Global Data**
 
-Any modifiable external source is global data. In other words, if we use database, API, datastore, we can fall into the trap of globalization. The key is to wrap these resources behind code that we always control.
+Herhangi bir değiştirilebilir harici kaynak, global bir veridir. Yani database, API , datastore kullanıyorsak küreselleşme tuzağına düşebiliriz. Önemli olan, bu kaynakları her zaman kontrol ettiğimiz bir kodun arkasına sarmalamak.
 
 **Tip 48: If It’s Important Enough to Be Global, Wrap It in an API**
 
 ## Topic 29: Juggling the Real Word
 
-An event represents the availability of information. This event can be realized by the user with an external effect, or it may occur with an internal effect as a result of the calculation. No matter how it happens, applications will work more effectively if we develop applications that respond to these events.
+Bir olay, bilginin kullanılabilriliğini temsil eder. Bu olay kullanıcı tarafından dış etkiyle de gerçekleşebilir veya hesaplama sonucu iç etkiyle de gerçekleşebilir. Nasıl gerçekleşirse gerçekleşsin, bu olaylara yanıt veren uygulamalar geliştirirsek uygulamalar daha efektif çalışacaktır.
 
-For this, 4 strategies can help us.
+Bunun için 4 strateji bize yardımcı olabilir.
 
 * 1. Finite State Machines
 * 2. The Observer Pattern
 * 3. Publish/Subscribe
 * 4. Reactive Programming and Streams
 
-The state machine systematically determines how to handle events. It represents a set of states, one of which is the current state. For each situation we also list the important events, where each event causes a new situation.
+Durum makinesi, olayların nasıl ele alınacağını sistemli bir şekilde belirler. Biri mevcut durum olmak üzere bir dizi durumu temsil eder. Her bir durum için de önemli olayları listeleriz, buradaki her bir olay yeni bir duruma sebep olur.
 
-In the observer model, there is an event source, called an observable, and a client list of observers that deal with events. An observer registers itself as an observable by passing a reference to a function. When the event occurs, the observable iterates down its list of observers and calls the function that each passed it
+Gözlemci modelinde, gözlemlenebilir olarak adlandırılan bir olay kaynağı ve olaylarla ilgilenen gözlemcilerin bir müşteri listesi vardır. Gözlemci, bir fonksiyona referans ileterek kendisini gözlemlenebilir olarak kaydeder. When the event occurs, the observable iterates down its list of observers and calls the function that each passed it
 
 But the observer pattern has a problem: because each observers has to register with the observable, it cause coupling. Also, in the typical implementation the callbacks are handled by the observable, synchronously, it can cause performance problem. This solves with Publish/Subscribe strategy.
 
-In the Pubsub model, there are publishers and subscribers, each connected through named channels. Subscribers show interest in one or more channels, and publishers post events on those channels. Unlike the Observer model, the relationship between publisher and subscriber happens outside of our code, potentially asynchronously.
+Pubsub modelinde, yayıncılar ve aboneler vardır, bunlar her biri isimlerindirilmiş kanallar aracılığıyla birbirlerine bağlanır. Aboneler, bir veya daha fazla kanala ilgi gösterir, yayıncılar ise bu kanallara etkinlik yazar. Gözlemci modelinden farklı olarak, yayıncı ve abone arasındaki ilişki potansiyel olarak eşzamansız olarak kodumuzun dışında gerçekleşir. 
 
-It's obvious that events can also be used to trigger reactions in code, but it's not always easy to activate them. This is where flows come into play. Streams allow us to treat events like a collection of data. It can be asynchronous, which means your code gets the opportunity to respond when the event occurs.
+Olayların, koddaki reaksiyonları tetiklemek için de kullanılabileceği çok barizdir ancak bunları devreye sokmak her zaman kolay olmuyor. Bu durumda devreye akışlar giriyor. Akışlar, olayları bir veri koleksiyonu gibi ele almamızı sağlar. Eş zamansız olabilir ve bu da kodunuzun olay meydana geldiğinde yanıt verme fırsatı elde ettiği anlamına gelir. 
 ## Topic 30: Transforming Programming
 **Tip 49: Programming Is About Code, But Programs Are About Data**
 
-The easiest way to start the transformation is to identify the requirements, to lay out what the inputs and outputs will be. The next thing we need to do is to reveal how we can access the output from the input.
+Dönüşüme başlamanın en kolay yolu, gereksinimleri belirlemektir, input ve output'ların ne olacağını ortaya koymaktır. Bundan sonra yapmamız gereken şey, input'tan output'a nasıl erişebiliriz bunu ortaya koymak olmalı.
 
 **Tip 50: Don’t Hoard State; Pass It Around**
-
 ##Topic 31: Inheritance Tax
-There are two reasons to use inheritance. The first is to transfer the common features of the base class to child classes that will inherit, and the second is to establish a relationship between the base and the child class. However, both come with problems. Because inheritance is coupling.
 
-Some people see inheritance as a way of identifying new species. However, after a while, it is necessary to add new layers to ensure the smallest differentiation in classes. It makes the application more fragile as the changes can affect many layers.
+Miras'ı kullanmanın iki sebebi vardır. Birincisi base sınıftaki ortak özellikleri miras alacak çocuk sınıflara aktarmak, ikincisi ise base ve çocuk sınıf arasında ilişki kurmak. Ancak bu ikisi de beraberinde sorunlar getiriyor. Because inheritance is coupling.
+
+Bazı insanlar kalıtımı yeni türler tanımlamanın bir yolu olarak görüyor. Ancak bir süreden sonra sınıflardaki en küçük farklılaşmayı sağlamak için yeni katmanlar eklemek gerekiyor. Yapılan değişiklikler birçok katmanı etkileyebileceğinden dolayı, uygulamayı daha kırılgan hale getiriyor.
 
 **Tip 51: Don’t Pay Inheritance Tax**
 
-3 alternative techniques that you will never use inheritance again;
+Bir daha asla inheritance kullanmayacağınız 3 alternatif teknik; 
 
 * Interfaces and protocols 
 * Delegation
@@ -414,103 +414,105 @@ Protocol ve arayüzleri bu kadar güçlü yapan şey, tip olarak tanımlayabilme
 
 **Tip 52: Prefer Interfaces to Express Polymorphism**
 
-Thanks to interface and protocol, we provide polymorphism without using inheritance.
+Interface ve protocol sayesinde, inheritance kullanmadan polymorphism sağlamış oluyoruz.
 
 **Tip 53: Delegate to Services: Has-A Trumps Is-A**
 
-If the parent class has 20 methods and the inheriting class only wants 2 of them, then the remaining 18 functions will be callable when it inherits. Alternatively, delegation can be used.
+Eğer ki parent class 20 metoda sahipse ve miras alacak sınıf bunlardan sadece 2 tanesini istiyorsa, miras aldığında geriye kalan 18 fonksiyon da çağrılabilir durumda olacak. Alternatif olarak delegation kullanılabilir.
 
-We talked about the disadvantages of Inheritance, our basic idea is we want to extend classes with new functions without using inheritance. For this, we write a set of these functions using Mixins and give this set a name. Later when we create the class, we can add the mixins we have created.
+Inheritance'ın dezavantajlarından bahsetmiştik, temel fikrimiz inheritance kullanmadan sınıfları yeni işlevlerle genişletmek istiyoruz. Bunun için Mixins kullanarak, bu fonksyionların bir kümesini yazarız ve bu kümeye de bir isim veririz. Daha sonradan sınıf oluştururken, oluşturduğumuz mixins'leri ekleyebiliriz.
 
 **Tip 54: Use Mixins to Share Functionality**
 
-These are the 3 methods we see; it can be alternative to share type info, add functionality or share methods. We have to determine the best according to the situation.
+Bu gördüğümüz 3 yöntem; tür bilgisini paylaşmak, işlevsellik eklemek veya yöntemleri paylaşmak için alternatif olabilir. Duruma göre en iyisini belirlemeliyiz.
 ## Topic 32: Configuration
-Your application; When working for different customers or in different environments, store specific customer and environment specific information outside the application.
+Uygulamanız; farklı müşteriler için veya farklı ortamlar'da çalıştığında, müşteriye ve ortama özgü olan spesifik bilgileri uygulama dışında saklayın.
 
 **Tip 55:Parameterize Your App Using External Configuration**
 
-Many applications have their configurations stored in database tables or as plain text files as JSON-YAML. Regardless of the form, the configuration information is read as a data structure when the application is first opened. Usually this data structure is stored globally for easy access but instead a better way would be to wrap our code behind the API from the configuration information.
+Birçok uygulama, konfigürasyonları veritabanı tablolarında veya JSON-YAML şeklinde düz metin dosyası halinde saklanmaktadır. Hangi form olursa olsun, uygulama ilk açıldığında konfigürasyon bilgileri bir veri yapısı olarak okunur. Genelde bu veri yapısı kolay erişim için global olarak saklanır ancak bunun yerine kodumuzu konfigürasyon bilgilerinden API arkasına sarmak daha iyi bir yol olacaktır. 
 
-* Many applications can access configurations using this API.
-* Globally configurations can be changed.
-* Continuity of the configuration file can be provided with an improved UI.
-* Configuration data becomes dynamic.
+* Birçok uygulama bu API'ı kullanarak konfigürasyonlara erişebilir.
+* Global olarak konfigürasyon'lar değiştirilebilir.
+* Konfigürasyon dosyasının devamlılığı geliştirilen bir UI ile sağlanabilir.
+* Konfigürasyon verileri dinamik hale gelir.
 
-It is important for us that it is dynamic, it prevents us from restarting the application when only a single parameter changes.
+Dinamik olması bizim için önemlidir, sadece tek bir parametre değiştiğinde uygulamayı tekrar başlatmamızı önler.
 # Chapter 6: Concurrency
-Concurrency is when two or more pieces of code run as if they were running at the same time. Parallelism is when they work at the same time.
+Eşzamanlılık, iki veya daha fazla kod parçasının aynı anda çalışıyormuş gibi çalışmasıdır. Paralellik, aynı anda çalıştıkları zamandır.
 
-There should be an environment where different parts of the code are executed as it runs, using things like threads, processes or fibers to ensure concurrency. For parallelism, hardware that can do two jobs at the same time is required.
+Eş zamanlılık sağlamak için thread,processes veya fibers gibi şeyler kullanarak kodun çalışırken farklı bölümlerinin yürütüldüğü bir ortam olmalıdır. Paralellik için iki işi aynı anda yapabilecek donanım gerekmektedir.
 ## Topic 33: Breaking Temporal Coupling
-Things tend to be linear when designing a system. After event A happens, we put forward a working logic so that event B happens. But this approach is inflexible, we must allow synchronicity and remove time dependency.
+Bir sistem tasarlanırken genelde işler doğrusal olma eğilimindedir. A olayı gerçekleştikten sonra, B olayı gerçekleşecek şekilde bir çalışma mantığı ortaya koyarız. Ancak bu yaklaşım esnek değildir, eş zamanlılığa izin vermeli ve zaman bağımlılığını ortadan kaldırmalıyız.
 
-We must model and analyze what can happen at the same time and what should happen in a precise order. One way to do this is to use an activity diagram.
+Aynı anda neler olabileceği ve kesin bir sırayla neler olması gerektiğini modellemeli ve analiz etmeliyiz. Bunu yapmanın bir yolu, aktivite diyagramı kullanmaktır.
 
 **Tip 56: Analyze Workflow to Improve Concurrency**
-Activity diagrams show potential areas of concurrency but cannot tell if this area is sufficient, this is where design comes into play. While designing concurrency, we aim to find parts that take time, such as database query, connecting to an external service, but not in our code.
 
-Concurrency is a software mechanism while parallelism is a hardware issue. If we have more than one processor, we can divide the work between them into independent parts, run each one in parallel, and then combine the result.
+Aktivite diyagramları potansiyel eşzamanlılık alanlarını gösterir ancak bu alanın yeterli olup olmadığını söyleyemez, burada tasarım devreye girer. Eşzamanlılık tasarımı yaparken veritabanı sorgusu, harici bir servise bağlanma gibi zaman alan ancak bizim kodumuzda bulunmayan kısımları bulmayı hedefliyoruz.
+
+Eşzamanlılık bir yazılım mekanizmasıyken, paralellik bir donanım sorunudur. Birden fazla işlemcimiz varsa, işi bunlar arasında birbirinden bağımsız parçalara bölüp her birini paralel olarak çalıştırıp ardından sonucu birleştirebiliriz.
 ## Topic 44: Shared State Is Incorrect State
 
 In the case where we use the shared state, we can lead to erroneous results if we act at the same time without considering the other.
 
 **Tip 57: Shared State Is Incorrect State**
 
-A semaphore is something that only one person can have at a time. When two people want to use the same common resource at the same time, only one person will be able to succeed in this request, thanks to the use of semaphores, while the other will have to wait. After the first user's job is finished, they will be able to continue using the updated resource.
+Semafor, aynı anda yalnızca bir kişinin sahip olabileceği bir şeydir. İki kişi aynı anda aynı ortak kaynağı kullanmak istediğinde semafor kullanımı sayesinde sadece bir kişi bu istekte başarılı olabilecektir, diğeri ise beklemek zorunda kalacaktır. İlk kullanıcının işinin bittikten sonra güncellenmiş kaynağı kullanmaya devam edebilecektir.
 
-There are also problems with this approach because the use of semaphores will only work if all users use it correctly, otherwise it will still be chaos.
+Bu yaklaşımda da problemler vardır çünkü semafor kullanımı sadece tüm kullanıcılar bunu doğru şekilde kullanırsa çalışacaktır aksi halde yine kaos olacaktır.
 
 **Tip 58: Random Failures Are Often Concurrency Issues**
 ## Topic 45: Actors and Processes
-Actors are an independent virtual processor with its own local private state. Every actor has a mailbox, when a message is sent there, if the actor is empty, it processes that message and starts processing the new message.
+Aktörler, kendi yerel private state'i olan bağımsız bir sanal işlemcidir. Her aktörün bir posta kutusu vardır, buraya mesaj düştüğünde eğer ki aktör boşsa o mesajı işler ve yeni mesajı işlemeye geçer.
 
-The compute is a more general purpose virtual processor implemented by the operating system to facilitate concurrency.
+İşlem, eşzamanlılığı kolaylaştırmak için işletim sistemi tarafından uygulanan daha genel amaçlı bir sanal işlemcidir.
 
-* It is not carried out in a planned way, nothing is under control.
-* Single state is kept in messages and actor's local state and messages cannot be inspected unless read by the receiver, local state cannot be accessed outside of the actor.
-* All messages are one-way, no reply.
-* Continues processing until an actor has completed all messages, processing one message at a time.
+* Planlı şekilde yürütülmez, hiçbir şey kontrol altında değildir.
+* Tek durum, mesajlarda ve aktörün local state'nde tutulur ve mesajlar alıcı tarafından okunmadıkça incelenemez, yerel duruma aktörün dışında erişilemez. 
+* Tüm mesajlar tek yönlüdür, cevap yoktur.
+* Bir aktör, aynı anda bir mesaj işleyecek şekilde tüm mesajları tamamlayana kadar işlemeye devam eder.
 
 **Tip 59: Use Actors For Concurrency Without Shared State**
 
 In the actor model, there’s no need to write any code to handle concurrency, as there is no shared state. 
 ## Topic 46: Blackboards
-A Blackboards with a rule engine covering legal requirements is an elegant solution to the challenges found here. The order of arrival of data is unimportant and feedback is easily handled.
+Yasal gereklilikleri kapsayan bir kural motoruyla birlikte bir kara tahta, burada bulunan zorluklara zarif bir çözümdür. Verilerin geliş sırası önemsizdir ve geri bildirim de kolayca işlenir.
 
 **Tip 60: Use Blackboards to Coordinate Workflow**
 
 # Chapter 7: While You Are Coding
-## Topic 37: Listen to Your Lizard Brain
-Starting a new project can be a frustrating and frightening experience, there are 2 underlying problems and both have the same solution.
+## Topic 37: Listen to Your Lizard Brain
 
-* Our lizard brain may be trying to tell us something based on our previous experiences, which can make us feel reluctant or suspicious.
-* The other problem may be just afraid of making mistakes.
+Yeni bir projeye başlamak sinir bozucu ve korkutucu bir deneyim olabilir, bunun altında yatan 2 problem vardır ve ikisinin de çözümü aynıdır.
 
-**Tip 61: Listen to Your Inner Lizard **
+* Kertenkele beynimizin, daha önceki deneyimlerimize dayanarak bize bir şeyler söylemeye çalışıyor olabilir bu da bizi isteksiz veya şüpheli hissettirebilir.
+* Diğer sorun ise sadece hata yapmaktan korkuyor olabilir.
 
-First of all, we should let go of what we were doing at that moment and move away from the keyboard to not think about the code, we should give our brain some time to organize itself.
+** Tip 61: Listen to Your Inner Lizard **
 
-If that doesn't work, we can try explaining the problem to someone else to get different parts of our brain to work. While we are telling it to someone else, we can suddenly understand for ourselves what the problem is.
+İlk olarak o an ne yapıyorsak onu bırakmalı ve kodu düşünmemek için klavyeden uzaklaşmalıyız, beynimizin kendini düzenlemesi için ona biraz zaman tanımalıyız. 
 
-If that doesn't work, we tell our brain that what we're trying to do isn't important, that it's okay if we make a mistake or go to waste. We can also do this with a prototype. In this way, tension will be replaced by a sense of urgency, and we will feel motivated to do the work. At this very moment, when we have the feeling of "I can do this", we will delete the prototype code and start the main work from the beginning.
+Eğer ki bu işe yaramazsa, beynimizin farklı bölümlerini çalıştırmak için sorunu başka birisine anlatmayı deneyebiliriz. Başka birisine anlatırken bir anda sorunun ne olduğunu kendimiz anlayabiliriz.
+
+Eğer ki bunlar da sonuç vermiyorsa beynimize yapmaya çalıştığımız şeyin önemli olmadığını, hata yaptığımızda veya boşa gittiğinde sorun olmayacağını söyleriz. Bunu da prototip ile gerçekleştirebiliriz. Bu sayede gerginlik yerini aciliyet duygusuna bırakacak, kendimizi işi yapmak için motive hissedeceğiz. Tam bu anda,  "ben bunu yapabilirim" hissini yaşadığımızda, prototip kodlarını sileceğiz ve baştan asıl işimize başlayacağız.
 
 ## Topic 38: Programming by Coincidence
-As developers, we work in a minefield where there are hundreds of traps we can catch every day, so we must be careful and avoid accidental programming.
+Geliştiriciler olarak, her gün yakalanabileceğimiz yüzlerce tuzağın olduğu bir mayın tarlasında çalışıyoruz bu yüzden dikkatli olmalı ve tesadüfen programlamadan kaçınmalıyız.
 
-* Accidents of Implementation: It is an error caused by the current writing style of the code.
+* Accidents of Implementation: Kodun o an ki yazım şeklinden kaynaklanan hatadır.
 
-* Close Enough Isn't: Approximate result is not enough, exact result is required.
+* Close Enough Isn’t: Yaklaşık sonuç yeterli değil, kesin sonuç gerekir.
 
-* Phantom Patterns: We can't just consider a certain pattern and write code for the next step.
+* Phantom Patterns: Sadece belirli bir kalıbı göz önüne alıp bir sonraki adım için kod yazamayız. 
 
-* Accidents of Context: Just because the answer we found is appropriate does not mean it is correct for our content.
+* Accidents of Context: Bulduğumuz cevabın uygun olması, bizim içeriğimiz için doğru olduğu anlamına gelmez.
 
-* Implicit Assumptions: People consider many assumptions while working, but assumptions that are not based on fundamental facts are the bane of the project.
+* Implicit Assumptions: İnsanlar çalışırken birçok varsayımı gözönüne alırlar ancak köklü gerçeklere dayanmayan varsayımlar projenin baş belasıdır.
 
 **Tip 62:Don’t Program by Coincidence**
 
-If we want to be a developer who makes fewer mistakes and catches them early, we must program deliberately:
+Daha az hata yapan, hataları erken yakalayan bir geliştirici olmak istiyorsak kasıtlı olarak programlamalıyız:
 
 * Always be aware of what you are doing.
 
@@ -528,7 +530,7 @@ If we want to be a developer who makes fewer mistakes and catches them early, we
 
 * Prioritize your effort to make time for the important parts
 
-* Don’t let existing code dictate future code. 
+*  Don’t let existing code dictate future code. 
 
 ## Topic 39: Algorithm Speed
 Big-O is never going to give the actual numbers for time or space. It simply tells you how these values will change as the input changes.
@@ -545,27 +547,27 @@ You can estimate the order of many basic algorithms using common sense.
 
 * Combinatoric: O(n^(k-1))
 
-When writing code, we must calculate what the value range of the numbers might be and how much it will affect the code's execution time.
+Kod yazarken, sayıların değer aralığının ne kadar büyüyebileceğini ve kodun çalışma süresini ne kadar etkileyeceğini hesaplayarak yazmalıyız. 
 
 **Tip 62: Estimate the Order of Your Algorithms**
 
-If we do not know how long the algorithm will take or how much space it will occupy in memory, we can run the algorithm with many different inputs and draw the results.
+Eğer ki algoritmanın ne kadar süreceğini veya memory'de ne kadar yer kaplayacağını bilmiyorsak birçok farklı input ile algoritmayı çalıştırıp sonuçları çizdirebiliriz.
 
-Our algorithm, which works effectively on small data sets, may not give the same result in large data sets.
+Küçük veri setlerinde efektif olarak çalışan algoritmamız büyük veri setlerinde aynı sonucu vermeyebilir.
 
 **Tip 63: Test Your Estimates**
 
-Here again, what we have to think about as pragmatic programmers is that the fastest algorithm will not always be the best. If we are going to work on a small dataset, it will be more important that the setup cost is shorter than the speed.
+Burada da yine pragmatic programcı olarak düşünmemiz gereken şey, her zaman en hızlı algoritmanın en iyi olmayacağıdır. Küçük bir veri seti üzerinde çalışacaksak eğer hızdan ziyade kurulum maliyetinin süresinin kısa olması daha önemli olacaktır.
 ## Topic 40: Refactoring
-During the development of the program, rethinking the previous written codes and decisions is a part of the development process.
+Programın geliştirilmesi aşamasında, önceki yazılan kodlar ve verilen kararları tekrar düşünmek geliştirme sürecinin bir parçasıdır.
 
 Refactoring is disciplined technique for restructuring an existing body of code, altering its internal structure without changing its external behavior.
 
-Refactoring doesn't mean completely rewriting, it means cleaning code in small steps with low risk.
+Refactoring tamamen baştan yazmak anlamına gelmez, küçük adımlar ile düşük riskli şekilde kodların temizlenmesi anlamına gelir.
 
-You need good, automated unit testing to guarantee that the behavior of the code hasn't changed.
+Kodun davranışının değişmediğini garanti etmek için iyi ve otomatikleştirilmiş birim testine ihtiyacınız var.
 
-When something feels wrong to us, we should not hesitate to change it. These errors may be as follows.
+Herhangi bir şey bize yanlış geldiğinde bunu değiştirmekten tereddüt etmemeliyiz. Bu yanlışlar aşağıdaki gibi olabilir.
 
 * Duplication
 
@@ -579,7 +581,7 @@ When something feels wrong to us, we should not hesitate to change it. These err
 
 * The Tests Pass
 
-There may be no time to refactor due to time pressure in the development process, but it is necessary to refactor regularly. Otherwise, as the project grows, it will be much more difficult and costly.
+Geliştirme sürecinde zaman baskısı olduğundan dolayı refactor'e zaman kalmıyor olabilir ancak düzenli olarak refactor yapmak gerekir. Yoksa proje büyüdükçe çok daha zor ve maliyetli olacaktır.
 
 **Tip 65: Refactor Early, Refactor Often**
 
@@ -596,7 +598,7 @@ Thinking about writing a test for our method allows us to look from the outside 
 
 **Tip 67: A Test Is the First User of Your Code**
 
-Also, it is difficult to test the function that depends on other code because you have to provide the whole environment. But if we do it in a testable way, we reduce the link.
+Ayrıca, diğer kodlarla bağlı olan fonksiyonu test etmek zordur çünkü tüm ortamı sağlamanız gerekir. Ancak test edilebilir şekilde yaparsak, bağlantıyı azaltmış oluruz.
 
 * 1. Decide on a small piece of functionality you want to add.
 
@@ -610,32 +612,32 @@ Also, it is difficult to test the function that depends on other code because yo
 
 **Tip 68: Build End-to-End, Not Top-Down or Bottom Up**
 
-A unit test is essentially a piece of code that runs a module. After calling the routine in the module, it compares the returned results with known values and checks if it works as expected. Then we can test the whole system again with unit testing facilities, since we know that the parts work one by one.
+Birim testi aslında bir modülü çalıştıran bir kod parçasıdır. Modüldeki rutini çağırdıktan sonra dönen sonuçları bilinen değerler ile karşılaştırır ve beklendik şekilde çalışıyor mu bunu kontrol eder. Daha sonra parçaların tek tek çalıştığını bildiğimiz için tüm sistemi yine birim test olanakları ile test edebiliriz.
 
-We like to think of unit testing as testing against contract. This test will give us 2 things, whether the code complies with the convention and whether the contract expresses what we want. The biggest advantage of this technique is that it facilitates debugging, we can directly understand which module has an error.
+Birim testini sözleşmeye karşı test olarak düşünmeyi seviyoruz. Bu test bize 2 şey sunacaktır, kodun sözleşmeye uyup uymadığı ve sözleşmenin istediğimiz şeyi ifade edip etmediği. Bu tekniğin en büyük avantajı debugı kolaylaştırmasıdır, hangi modülde hata olduğunu direkt anlayabiliriz.
 
 **Tip 69: Design to Test**
 
-Give test code the same care as any development. Keep it decoupled, clean, and robust.
+Test koduna, herhangi bir geliştirme ile aynı özeni gösterin. Keep it decoupled, clean, and robust.
 
 **Tip 70: Test Your Software, or Your Users Will**
 
 
 ## Topic 42: Property-Based Testing
-We write code based on an assumption and we write tests based on that assumption. Just because the test we wrote passes does not mean that our assumption is correct. Because the test only does what it's supposed to do according to our assumption.
+Bir varsayıma göre kod yazıyoruz ve yine bu varsayıma göre test yazıyoruz. Yazdığımız testin geçiyor olması, varsayımımızın doğru olduğu anlamına gelmez. Çünkü test sadece bizim varsayımımıza göre yapması gerekeni yapar.
 
-**Tip 71: Use Property-Based Tests to Validate Your Assumptions**
+** Tip 71: Use Property-Based Tests to Validate Your Assumptions**
 
-In property-based testing, we set some rules to generate input and create some claims to validate the output. We don't know what will happen next.
+Property-based testingde girdi üretmek için bazı kurallar belirliyoruz ve çıktıyı doğrulamak için de bazı iddalar oluşturuyoruz. Sonrasında ne olacağını bilemiyoruz.
 
-When a property-based test fails, we must determine for which values it failed and unit-test with those values. By forcing this bad value to be used, unit testing will ensure that the error is not overlooked.
+Bir property-based test başarısız olduğunda, hangi değerler için başarısız olduğunu belirlemeli ve bu değerler ile unit-test yapmalıyız. Bu hatalı değeri kullanmaya zorlayarak yapacağımız birim test, hatanın gözden kaçmamasını sağlar.
 
 Property-based testing is complementary to unit testing: they address different concerns, and each brings its own benefits
 
 ## Topic 43: Stay Safe Out There
 Pragmatic Programmers have a healthy amount of paranoia about security to prevent any attack.
 
-Restrict any access points through which an attacker can enter data, extract data, or initiate execution of a service.
+Saldırganın veri girebileceği, veri çıkarabileceği, veya bir hizmetin yürütülmesini başlatabileceği tüm erişim noktalarını kısıtlayın.
 
 **Tip 72:Keep It Simple and Minimize Attack Surfaces**
 
@@ -651,28 +653,188 @@ Restrict any access points through which an attacker can enter data, extract dat
 
 * Information designed to make debugging easier can make breaking in easier as well. 
 
-Don't automatically set a high-level permission, if the high-level permission is needed, allow it but retract it when the job is done. Only allow access to sensitive resources by people with certain permissions.
+Yüksek seviyeli bir izni otomatik olarak ayarlamayın, yüksek seviye izne ihtiyaç duyulursa izin verin ancak iş bitince geri alın. Hassas kaynaklara sadece belirli izne sahip olan kişilerin erişmesine izin verin.
 
-Set the default settings in the application in the most reliable way.
+Uygulamadaki varsayılan ayarları en güvenilir şekilde ayarlayın.
 
-No matter where you store personal data, never store it in plain text, keep it encrypted.
+Kişisel verileri nerede saklıyor olursanız olun asla plain text olarak saklamayın, encrypted olarak saklayın.
 
-When the computer needs a security patch, we shouldn't put it off until later. Because otherwise, it may become vulnerable to abuse.
+Bilgisayarın güvenlik yamasına ihtiyacı olduğunda bunu sonraya ertelememeliyiz. Çünkü aksi halde istismara açık hale gelebilir.
 
 **Tip 73:Apply Security Patches Quickly**
 
 ## Topic 44: Naming Things
 Naming is important because because they reveal a lot about your intent and belief.
 
-When naming things, we should always consider what we mean. In this way, the naming we make will be more understandable.
+Bir şeyleri isimlendirirken, her zaman ne demek istediğimizi düşünmeliyiz. Bu şekilde yaptığımız isimlendirmeler daha anlaşılır olacaktır.
 
-In addition, the culture in the environment in which we develop is also important. If some general naming used in one programming language is not used in another programming language, this will be just as wrong.
+Bunun yanında geliştirme yaptığımız ortamdaki kültür de önemlidir. Bir programlama dilinde kullanılan bazı genel isimlendirmeler başka programlama dilinde öyle kullanılmıyorsa bu da bir o kadar yanlış olacaktır.
 
-Every project has jargon words with specific meanings that those on the team use to ensure consistency. To ensure consistency, everyone on the team needs to know what they mean.
+Her projede, tutarlılık sağlamak için takımdakilerin kullandığı özel anlamı olan jargon kelimeler vardır. Tutarlılığı sağlayabilmek için takımdaki herkesin bunların anlamını bilmesi gerekir.
 
-When you see a name that doesn't express its intended use, is misleading or confusing, correct it. As pragmatic programmers, we should fix it instead of agreeing with others' mistake.
+Kullanım amacını ifade etmeyen, yanıltıcı veya kafa karıştırıcı bir ad gördüğünüzde, onu düzeltin. Pragmatic programcı olarak, başkalarının yaptığı yanlışa katılmak yerine bunu düzeltmeliyiz. 
 
 **Tip 74: Name Well; Rename When Needed**
+
+# Chapter 8: Before the Project
+## Topic 45: The Requirements Pit
+Gereksinimler, varsayımlar ve yanlış anlamalar arasında kaybolmuş vaziyettedir. Hatta bazen hiç var olmazlar.
+
+**Tip 75: No One Knows Exactly What They Want**
+
+Gerçek dünyada, insanlar çelişkili ve ne istediklerini bilmiyorlar. Programcılar burada devreye giriyor, insanların ne istediklerini anlamalarına yardımcı oluyoruz.
+
+**Tip 76: Programmers Help People Understand What They Want**
+
+The real problem starts with a very simple need, but with it comes a discovery. As programmers, we should question what kind of consequences this need can bring when there is a need and give the necessary feedback to the customer.
+
+**Tip 77: Requirements Are Learned in a Feedback Loop**
+
+Pragmatic Programmer looks at all of the project as a requirements gathering exercise. That's why it takes short steps and collects feedback.
+
+When developing a system, spend time with the people who will use that system, and what needs will they meet?
+
+**Tip 78: Work with a User to Think Like a User**
+
+**Tip 79: Policy Is Metadata**
+
+Creating documents with requirements specified is for the programmer, not the client. Because the customer will find them boring or incomprehensible.
+
+One problem when creating a requirements document is to be too specific. The simplest statement that accurately reflects the business need is the best.
+
+Create a project glossary and write all terms used in the project there. And to ensure consistency, make sure everyone working on the project uses this glossary.
+
+**Tip 80: Use a Project Glossary**
+
+## Topic 46: Solving Impossible Puzzles
+What we need to do when solving puzzles is to identify the real constraints and find solutions to them. This is also the case when developing software.
+
+The main problem is to identify the actual constraints.
+
+**Tip 81: Don’t Think Outside the Box—Find the Box**
+
+Categorize and prioritize constraints. We have to start with the most restrictive constraint first and fit the rest into it.
+
+If a solution you find while dealing with a difficult problem seems easy to you and you think it is impossible, you should get away from the problem and do other things. If that doesn't work, you can try explaining the problem to others.
+
+## Topic 47: Working Together
+In the pair programming approach, two people work together, but only one writes code at a time. One of the advantages is that the coder is focused only on writing the code, that is, following the syntax, while the other is able to examine the problem more broadly.
+
+Mob programming approach, on the other hand, can be called an extended version of pair programming. Not only 2 developers, but also users, sponsors and test developers can be included.
+
+Both of these approaches have some points to consider:
+
+* Do not satisfy your ego while developing the code, do not say that "I am better".
+
+* Start in small groups.
+
+* Criticize the code, but say "we can do better" instead of "you did it wrong".
+
+* Listen to different opinions and try to understand.
+
+* Check back often to try and improve next time.
+
+**Tip 82: Don’t Go into the Code Alone**
+
+## Topic 48: The Essence of Agility
+Agile is how you do a job, it's your style.
+
+**Tip 83: Agile Is Not a Noun; Agile Is How You Do Things**
+
+What we call Agile is not something that we can say will happen if you do this. Agile is being able to respond to changes and transformations, to keep up.
+
+Adapting to Agile requires good design because good design makes it easy to change things. If change is easy, we can adapt without hesitation.
+
+# Chapter 9: Pragmatic Projects
+## Topic 49: Pragmatic Teams
+A pragmatic team is small, not crowded. Everyone knows and trusts each other.
+
+**Tip 84: Maintain Small, Stable Teams**
+
+Quality is a team issue, if you place the hardest working developer on a team whose members who don't care about any problems, that hard work won't last long. That's why no one on the team should tolerate broken windows.
+
+Even in teams with very good communication, important changes in projects can be unaware of each other. Encourage everyone to actively monitor the environment for changes.
+
+If your team is serious about improvement and innovation, you need to schedule it. 
+
+**Tip 85: Schedule It to Make It Happen**
+
+The worst project teams are those where meetings are held that no one wants to talk about, and the documentation is incomprehensible. However in good teams, communication is strong, they have regular documents that will make everyone feel good.
+
+In order not to waste the effort, that is, not to repeat ourselves, we need to have strong communication within the team. You should be able to ask a question of team members and get a more-or-less instant reply.
+
+You can implement very small pieces of functionality very quickly and get instant feedback on how well your team is communicating and delivering
+
+**Tip 86: Organize Fully Functional Teams**
+
+Automation is the most fundamental part of every project team. Make sure the team has the skills to build and deploy tools that automate project development and production deployment.
+
+## Topic 50: Coconuts Don’t Cut It
+We should avoid applying things because it is a trend. What we have to think about when implementing is, is this what we want to do, should it fit our team? Otherwise, we would only have tried to imitate but failed.
+
+**Tip 87: Do What Works, Not What’s Fashionable**
+
+There is no one-size-fits-all method, instead we have to look at many different popular methods and get their good points.
+
+**Tip 88: Deliver When Users Need It**
+
+## Topic 51: Pragmatic Starter Kit
+
+We want consistency and repeatability in projects. For this, there should be no manual procedure, because procedures interpreted by different people leave it to chance and eliminate repeatability. For this, keep everything you need to build your project under version control.
+
+**Tip 89: Use Version Control to Drive Builds, Tests, and Releases**
+
+Many developers test avoiding them knowing where the code will fail, but pragmatic programmers are different. If we have a mistake, we want to be the first to find it.
+
+**Tip 90: Test Early, Test Often, Test Automatically**
+
+We cannot say that the code is finished without performing a test and getting a successful result.
+
+**Tip 91: Coding Ain’t Done ’Til All the Tests Run**
+
+When doing unit testing, all modules you use must pass their own unit tests.
+
+Integration testing shows that the main subsystems that make up the project work and work well with each other.
+
+After successful development, we should also consider this. Does it meet the functional requirements of the system? his, too, needs to be tested.
+
+We also need to test how well it will work in the real world. To do this, we can test it with high hardware power and stress test it.
+
+Because we can't write perfect software, we can't write perfect test software either. We also need to test the tests.
+
+**Tip 92: Use Saboteurs to Test Your Testing**
+
+While doing the tests, we should test by thinking about possible negative scenarios.
+
+**Tip 93: Test State Coverage, Not Code Coverage**
+
+We can use property-based testing techniques to generate test data according to the contracts and invariants of the code under test.
+
+**Tip 94: Find Bugs Once**
+
+Automated tests should be developed on to check for error every time, no matter how trivial.
+
+**Tip 95: Don’t Use Manual Procedures**
+
+With these three legs of version control, ruthless testing, and full automation, your project will have the firm foundation you need so you can concentrate on the hard part: delighting users.
+
+## Topic 53: Delight Your Users
+The users' desire is to solve their problems in line with their goals and budgets. That's why they can't be motivated by code because their expectations are not software related. Together with your team, you can make the user happy.
+
+**Tip 96: Delight Users, Don’t Just Deliver Code**
+
+## Topic 54: Pride and Prejudice
+Pragmatic programmers do not shy away from responsibility, they take responsibility and take pride in their work.
+
+**Tip 97: Sign Your Work**
+
+When people see that you wrote the code, they should make sure it's well written, tested and documented. Your name should be a signature of your work..
+
+
+
+
+
+
 
 
 
